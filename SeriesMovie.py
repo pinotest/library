@@ -1,0 +1,17 @@
+from BaseMovie import BaseMovie
+
+class SeriesMovie(BaseMovie):
+    def __init__(self, episode_number, season_number,*args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.episode_number = episode_number
+        self.season_number = season_number
+        #self._number_plays = 0
+    def __str__(self):
+        #return f'{self.title} S{self.season_number}E{self.episode_number}'
+        return f'{self.title} S' + "{:02d}".format(self.season_number)+"E"+"{:02d}".format(self.episode_number)
+    def __repr__(self):
+        return f"SeriesMovie(title={self.title} , initial_release={self.initial_release}, content_type={self.content_type}, season_number={self.season_number}, episode_number={self.episode_number})"
+    def play(self):
+       super().play()
+    #dla chętnych
+    #Do klasy reprezentującej serial, dopisz metodę, która wyświetla ilość odcinków danego serialu dostępnych w bibliotece.
