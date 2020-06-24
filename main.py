@@ -1,13 +1,11 @@
-#from faker import Faker
 from datetime import datetime
 from BaseMovie import BaseMovie
 from SeriesMovie import SeriesMovie
-
-#fake = Faker('pl_PL')
+import random
 
 library = []
 
-def get_movies(library):
+def get_movies():
     '''
     Function gets two arguments: 
     card type 0 - create businessContact or other - create BaseContact
@@ -19,12 +17,8 @@ def get_movies(library):
         if (type(library[i])==BaseMovie):
             library_movies.append(library[i])
     return sorted(library_movies, key=lambda Movie: Movie.title)
-    #if card_type == 0:
-    #    return [BusinessContact(fake.company(), fake.job(), fake.phone_number(),fake.first_name(),fake.last_name(), 
-    #    fake.phone_number(), fake.email()) for i in range(amount)]
-    #return [BaseContact(fake.first_name(), fake.last_name(), fake.phone_number(), fake.email()) for i in range(amount)]
 
-def get_series(library):
+def get_series():
     library_series = []
     for i,j in enumerate(library):
         if (type(library[i])==SeriesMovie):
@@ -52,11 +46,11 @@ def generate_views_ten_times():
     for i in range(10):
         generate_views()
 
-def top_titles(content_type):
+def top_titles(top_number, content_type=2):
     #Napisz funkcję top_titles(), która zwróci wybraną ilość najpopularniejszych tytułów z biblioteki. 
     #Dla chętnych: dodaj do funkcji parametr content_type, którym wybierzesz czy mają zostać pokazane filmy, czy seriale.
     '''
-    Content_typ: 0 - Movies, 1 - TV Series, Other - Movies and TV series
+    Content_type: 0 - Movies, 1 - TV Series, Other - Movies and TV series
     '''
     if content_type == 0:
         temp_library = get_movies()
@@ -74,13 +68,13 @@ def top_titles(content_type):
         top_library.append(sorted_library[i])
     return top_library
 
-#dla chętnych
-#Napisz funkcję, która za pomocą pętli dodaje pełne sezony seriali do biblioteki. 
-#Funkcja powinna przyjmować parametry takie jak: tytuł serialu, rok wydania, gatunek, numer sezonu, liczba odcinków do dodania.
 def add_full_season_series(title, initial_release, content_type, season_number, episode_numbers):
+    #dla chętnych
+    #Napisz funkcję, która za pomocą pętli dodaje pełne sezony seriali do biblioteki. 
+    #Funkcja powinna przyjmować parametry takie jak: tytuł serialu, rok wydania, gatunek, numer sezonu, liczba odcinków do dodania.
     for i in range(1, episode_numbers+1):
         library.append (SeriesMovie(title=title,initial_release=initial_release,content_type=content_type,season_number=season_number, episode_number=i))
-        
+
 def number_of_episodes(title, season=1):
     library = search(title)
     episode_count = 0
@@ -88,11 +82,11 @@ def number_of_episodes(title, season=1):
         if library[i].season_number == season:
             episode_count += 1
     return episode_count
-        
 #Niech program po uruchomieniu działa w następujący sposób:
 #Wyświetli na konsoli komunikat Biblioteka filmów.
 print("=== Biblioteka filmów ====")
 #Wypełni bibliotekę treścią.
+print("Dodaję seriale i filmy...")
 add_full_season_series("Friends", 1994, "comedy", 1, 19)
 add_full_season_series("Friends", 1995, "comedy", 2, 20)
 add_full_season_series("Friends", 1996, "comedy", 3, 21)
@@ -105,18 +99,29 @@ library.append(BaseMovie("Upgrade", 2018, "sci-fi"))
 library.append(BaseMovie("Alien", 1979, "horror"))
 library.append(BaseMovie("The shining", 1980, "horror"))
 #Wygeneruje odtworzenia treści za pomocą funkcji generate_views.
+print("Generuję dla losowych pozycji ilość wypożyczeń...")
 generate_views_ten_times()
 generate_views_ten_times()
 generate_views_ten_times()
 #Wyświetli na konsoli komunikat Najpopularniejsze filmy i seriale dnia <data>, gdzie <data> to bieżąca data w formacie DD.MM.RRRR.
 #Wyświetli listę top 3 najpopularniejszych tytułów.
 #top filmy
+print("---------")
 print(top_titles(3,0))
 #top seriale
+
+print("---------")
 print(top_titles(3,1))
 #top filmy i seriale
-print(top_titles(3))
+
+print("---------")
+top_movies = top_titles(3) 
+for i,j in enumerate(top_movies):
+    print(top_movies[i].title, top_movies[i].number_plays)
 
 print("---------")
 print("Liczba odcinków Lost w sezonie 2: ", number_of_episodes("Lost",2))
+print("Liczba odcinków Lost w sezonie 1: ", number_of_episodes("Friends"))
+
+
 
