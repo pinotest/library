@@ -47,9 +47,10 @@ def generate_views():
     for i in range(how_many_times):
         library[drawn_movie].play()
 
-def generate_views_times(how_many_times):
+def generate_views_ten_times():
     #Napisz funkcję, która uruchomi generate_views 10 razy.
-    pass
+    for i in range(10):
+        generate_views()
 
 def top_titles(content_type):
     #Napisz funkcję top_titles(), która zwróci wybraną ilość najpopularniejszych tytułów z biblioteki. 
