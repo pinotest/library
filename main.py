@@ -42,7 +42,10 @@ def search(title):
 
 def generate_views():
     #Napisz funkcję generate_views, która losowo wybiera element z biblioteki, a następnie dodaje mu losową (z zakresu od 1 do 100) ilość odtworzeń.
-    pass
+    drawn_movie = random.randint(0,len(library)-1)
+    how_many_times = random.randint(1,100) 
+    for i in range(how_many_times):
+        library[drawn_movie].play()
 
 def generate_views_times(how_many_times):
     #Napisz funkcję, która uruchomi generate_views 10 razy.
