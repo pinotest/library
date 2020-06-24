@@ -83,17 +83,25 @@ def add_full_season_series(title, initial_release, content_type, season_number, 
 
 #Niech program po uruchomieniu działa w następujący sposób:
 #Wyświetli na konsoli komunikat Biblioteka filmów.
+print("=== Biblioteka filmów ====")
 #Wypełni bibliotekę treścią.
+add_full_season_series("Friends", 1994, "comedy", 1, 19)
+add_full_season_series("Game of Thrones", 2011, "drama", 10, 8)
+add_full_season_series("Aliens", 1991, "horror", 1, 9)
+add_full_season_series("Lost", 2004, "drama", 1, 22)
+library.append(BaseMovie("Truman Show", 1999, "comedy"))
+library.append(BaseMovie("Upgrade", 2018, "sci-fi"))
+library.append(BaseMovie("Alien", 1979, "horror"))
+library.append(BaseMovie("The shining", 1980, "horror"))
 #Wygeneruje odtworzenia treści za pomocą funkcji generate_views.
+generate_views_ten_times()
+generate_views_ten_times()
+generate_views_ten_times()
 #Wyświetli na konsoli komunikat Najpopularniejsze filmy i seriale dnia <data>, gdzie <data> to bieżąca data w formacie DD.MM.RRRR.
 #Wyświetli listę top 3 najpopularniejszych tytułów.
-
-print("=== Biblioteka filmów ====")
-add_full_season_series("Friends", 1994, "comedy", 1, 2)
-add_full_season_series("Game of Thrones", 2011, "drama", 10, 2)
-add_full_season_series("Alien", 1991, "horror", 1, 2)
-library.append(BaseMovie("Truman Show", 1999, ""))
-
-#print(get_series(library))
-#print(search("game of thrones"))
-
+#top filmy
+print(top_titles(3,0))
+#top seriale
+print(top_titles(3,1))
+#top filmy i seriale
+print(top_titles(3))
