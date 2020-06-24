@@ -80,15 +80,26 @@ def top_titles(content_type):
 def add_full_season_series(title, initial_release, content_type, season_number, episode_numbers):
     for i in range(1, episode_numbers+1):
         library.append (SeriesMovie(title=title,initial_release=initial_release,content_type=content_type,season_number=season_number, episode_number=i))
-
+        
+def number_of_episodes(title, season=1):
+    library = search(title)
+    episode_count = 0
+    for i,j in enumerate(library):
+        if library[i].season_number == season:
+            episode_count += 1
+    return episode_count
+        
 #Niech program po uruchomieniu działa w następujący sposób:
 #Wyświetli na konsoli komunikat Biblioteka filmów.
 print("=== Biblioteka filmów ====")
 #Wypełni bibliotekę treścią.
 add_full_season_series("Friends", 1994, "comedy", 1, 19)
+add_full_season_series("Friends", 1995, "comedy", 2, 20)
+add_full_season_series("Friends", 1996, "comedy", 3, 21)
 add_full_season_series("Game of Thrones", 2011, "drama", 10, 8)
 add_full_season_series("Aliens", 1991, "horror", 1, 9)
 add_full_season_series("Lost", 2004, "drama", 1, 22)
+add_full_season_series("Lost", 2005, "drama", 2, 20)
 library.append(BaseMovie("Truman Show", 1999, "comedy"))
 library.append(BaseMovie("Upgrade", 2018, "sci-fi"))
 library.append(BaseMovie("Alien", 1979, "horror"))
@@ -105,3 +116,7 @@ print(top_titles(3,0))
 print(top_titles(3,1))
 #top filmy i seriale
 print(top_titles(3))
+
+print("---------")
+print("Liczba odcinków Lost w sezonie 2: ", number_of_episodes("Lost",2))
+
