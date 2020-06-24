@@ -7,50 +7,48 @@ library = []
 
 def get_movies():
     '''
-    Function gets two arguments: 
-    card type 0 - create businessContact or other - create BaseContact
-    amount - number of cards to create
-    and return a list of created cards
+    Function returns sorted list of movies from library list without tv series
     '''
-    library_movies = []
-    for i,j in enumerate(library):
-        if (type(library[i])==BaseMovie):
-            library_movies.append(library[i])
+    library_movies = [j for i,j in enumerate(library) if (type(library[i])==BaseMovie) ]
     return sorted(library_movies, key=lambda Movie: Movie.title)
 
 def get_series():
-    library_series = []
-    for i,j in enumerate(library):
-        if (type(library[i])==SeriesMovie):
-            library_series.append(library[i])
+    '''
+    Function returns sorted list of TV series from library list without movies
+    '''
+    library_series = [j for i,j in enumerate(library) if (type(library[i])==SeriesMovie)]
     return sorted(library_series, key=lambda Movie: Movie.title)
-    #Napisz funkcje get_movies oraz get_series, które będą filtrować listę i zwracać odpowiednio tylko filmy oraz tylko seriale. Posortuj listę wynikową alfabetycznie.
-
+ 
 def search(title):
-#    Napisz funkcję search, która wyszukuje film lub serial po jego tytule.
-    library_search = []
-    for i,j in enumerate(library):
-        if (library[i].title.upper() == title.upper()):
-            library_search.append(library[i])
+    '''
+    Function return sorted list of movies or tv series title from library for a given argument title  
+    '''
+    library_search = [j for i,j in enumerate(library) if (library[i].title.upper() == title.upper())]
     return sorted(library_search, key=lambda Movie: Movie.title)
 
 def generate_views():
-    #Napisz funkcję generate_views, która losowo wybiera element z biblioteki, a następnie dodaje mu losową (z zakresu od 1 do 100) ilość odtworzeń.
+    '''
+    Function choose random element of library, generate random number of plays and  execute function play()  
+    '''
     drawn_movie = random.randint(0,len(library)-1)
     how_many_times = random.randint(1,100) 
     for i in range(how_many_times):
         library[drawn_movie].play()
 
 def generate_views_ten_times():
-    #Napisz funkcję, która uruchomi generate_views 10 razy.
+    '''
+    Function only execute 10 times function generate_views()
+    '''
     for i in range(10):
         generate_views()
 
 def top_titles(top_number, content_type=2):
-    #Napisz funkcję top_titles(), która zwróci wybraną ilość najpopularniejszych tytułów z biblioteki. 
-    #Dla chętnych: dodaj do funkcji parametr content_type, którym wybierzesz czy mają zostać pokazane filmy, czy seriale.
     '''
+    Function gets two arguments:
+    - top_number - number of element that should be return
+    - content_type with default value = 2, used to filtr a library before selecting top_number, 
     Content_type: 0 - Movies, 1 - TV Series, Other - Movies and TV series
+    Returns a list with top_number of selected movies from library with the highest value of number_plays
     '''
     if content_type == 0:
         temp_library = get_movies()
@@ -69,23 +67,24 @@ def top_titles(top_number, content_type=2):
     return top_library
 
 def add_full_season_series(title, initial_release, content_type, season_number, episode_numbers):
-    #dla chętnych
-    #Napisz funkcję, która za pomocą pętli dodaje pełne sezony seriali do biblioteki. 
-    #Funkcja powinna przyjmować parametry takie jak: tytuł serialu, rok wydania, gatunek, numer sezonu, liczba odcinków do dodania.
+    '''
+    Function gets arguments to create SeriesMovie objects and add them to library for each eposide_number
+    '''    
     for i in range(1, episode_numbers+1):
         library.append (SeriesMovie(title=title,initial_release=initial_release,content_type=content_type,season_number=season_number, episode_number=i))
 
 def number_of_episodes(title, season=1):
+    '''
+    Function gets title and season argument (default 1) and return for a given title and season number of episodes
+    '''
     library = search(title)
     episode_count = 0
     for i,j in enumerate(library):
         if library[i].season_number == season:
             episode_count += 1
     return episode_count
-#Niech program po uruchomieniu działa w następujący sposób:
-#Wyświetli na konsoli komunikat Biblioteka filmów.
+
 print("=== Biblioteka filmów ====")
-#Wypełni bibliotekę treścią.
 print("Dodaję seriale i filmy...")
 add_full_season_series("Friends", 1994, "comedy", 1, 19)
 add_full_season_series("Friends", 1995, "comedy", 2, 20)
@@ -98,30 +97,23 @@ library.append(BaseMovie("Truman Show", 1999, "comedy"))
 library.append(BaseMovie("Upgrade", 2018, "sci-fi"))
 library.append(BaseMovie("Alien", 1979, "horror"))
 library.append(BaseMovie("The shining", 1980, "horror"))
-#Wygeneruje odtworzenia treści za pomocą funkcji generate_views.
 print("Generuję dla losowych pozycji ilość wypożyczeń...")
 generate_views_ten_times()
 generate_views_ten_times()
 generate_views_ten_times()
-#Wyświetli na konsoli komunikat Najpopularniejsze filmy i seriale dnia <data>, gdzie <data> to bieżąca data w formacie DD.MM.RRRR.
-#Wyświetli listę top 3 najpopularniejszych tytułów.
-#top filmy
 print("---------")
 print(top_titles(3,0))
-#top seriale
-
 print("---------")
 print(top_titles(3,1))
-#top filmy i seriale
-
 print("---------")
+
 top_movies = top_titles(3) 
 for i,j in enumerate(top_movies):
     print(top_movies[i].title, top_movies[i].number_plays)
 
 print("---------")
 print("Liczba odcinków Lost w sezonie 2: ", number_of_episodes("Lost",2))
-print("Liczba odcinków Lost w sezonie 1: ", number_of_episodes("Friends"))
+print("Liczba odcinków Friends w sezonie 1: ", number_of_episodes("Friends"))
 
 
 
