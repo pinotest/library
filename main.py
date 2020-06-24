@@ -55,7 +55,24 @@ def generate_views_ten_times():
 def top_titles(content_type):
     #Napisz funkcję top_titles(), która zwróci wybraną ilość najpopularniejszych tytułów z biblioteki. 
     #Dla chętnych: dodaj do funkcji parametr content_type, którym wybierzesz czy mają zostać pokazane filmy, czy seriale.
-    pass
+    '''
+    Content_typ: 0 - Movies, 1 - TV Series, Other - Movies and TV series
+    '''
+    if content_type == 0:
+        temp_library = get_movies()
+        print("Najpopularniejsze filmy dnia ", datetime.strftime(datetime.now(),'%d:%m:%Y'))
+    elif content_type == 1:
+        print("Najpopularniejsze seriale dnia ", datetime.strftime(datetime.now(),'%d:%m:%Y'))
+        temp_library = get_series()
+    else:
+        temp_library = library
+        print("Najpopularniejsze filmy i seriale dnia ", datetime.strftime(datetime.now(),'%d:%m:%Y'))
+
+    sorted_library = sorted(temp_library, key=lambda Movie: Movie.number_plays, reverse=True)
+    top_library = []
+    for i in range(top_number):
+        top_library.append(sorted_library[i])
+    return top_library
 
 #dla chętnych
 #Napisz funkcję, która za pomocą pętli dodaje pełne sezony seriali do biblioteki. 
