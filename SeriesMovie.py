@@ -2,9 +2,8 @@ from BaseMovie import BaseMovie
 
 
 class SeriesMovie(BaseMovie):
-    def __init__(self, episode_number, season_number, *args, **kwargs):
+    def __init__(self, season_number, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.episode_number = episode_number
         self.season_number = season_number
 
     def __str__(self):
