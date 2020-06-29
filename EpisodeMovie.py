@@ -1,11 +1,10 @@
-from BaseMovie import BaseMovie
+from SeriesMovie import SeriesMovie
 
 
-class SeriesMovie(BaseMovie):
-    def __init__(self, episode_number, season_number, *args, **kwargs):
+class EpisodeMovie(SeriesMovie):
+    def __init__(self, episode_number, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.episode_number = episode_number
-        self.season_number = season_number
 
     def __str__(self):
         # return f'{self.title} ({self.number_plays})'
